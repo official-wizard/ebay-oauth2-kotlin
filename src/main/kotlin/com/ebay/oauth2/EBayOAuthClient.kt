@@ -8,6 +8,10 @@ class EBayOAuthClient(private val credentials: EBayCredentials, debugging: Boole
 
     val api: EBayOAuthInterface = retroClient.create(EBayOAuthInterface::class.java)
 
+    fun buildScope(scope: List<String>): String {
+        return URLEncoder.encode(scope.joinToString("+"), "UTF-8")
+    }
+
     fun generateIdTokenUrl(nonce: String, state: String? = null): String {
 
         return buildURL(credentials.environment.webEndpoint, mapOf(
@@ -25,7 +29,7 @@ class EBayOAuthClient(private val credentials: EBayCredentials, debugging: Boole
             "client_id" to credentials.appId,
             "response_type" to "code",
             "redirect_uri" to URLEncoder.encode(credentials.redirectUri, "UTF-8"),
-            "scope" to URLEncoder.encode(scopes.joinToString("+"), "UTF-8"),
+            "scope" to buildScope(scopes),
             "state" to state,
             "auth_type" to "oauth"
         ))
