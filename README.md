@@ -152,5 +152,5 @@ mvn clean package
 
 ## License
 
-Apache License 2.0. See [License File](LICENSE).
+Apache License 2.0. See [License File](LICENSE.md).
 
